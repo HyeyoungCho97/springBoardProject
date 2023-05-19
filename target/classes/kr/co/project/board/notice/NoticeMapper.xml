@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.project.board.notice.NoticeMapper">
+	<insert id="insert" parameterType="kr.co.project.board.notice.NoticeVO">
+		INSERT INTO	notice(
+			title, content, viewcount, regdate, filename_org, filename_real, memberno
+		) VALUES(
+			#{title}, #{content}, 0, NOW(), #{filename_org}, #{filename_real}, #{memberno}
+		)
+	</insert>
+	<update id="update" parameterType="kr.co.project.board.notice.NoticeVO">
+		UPDATE notice SET
+			title = #{title},
+			content = #{content},
+			filename_org = #{filename_org},
+			filename_real = #{filename_real}
+		WHERE no=#{no}
+	</update>
+	<delete id="delete" parameterType="kr.co.project.board.notice.NoticeVO">
+		DELETE FROM notice WHERE no=#{no}
+	</delete>
+	<sql id="whereSql">
+		<where>
+			<if test="stype == 'all'">
+				(title LIKE '%${sword}%' OR content LIKE '%${sword}%')
+			</if>
+			<if test="stype != 'all' and stype!= null and stype!=null">
+				${stype} LIKE '%${sword}%' 
+			</if>
+			<if test="memberno != 0">
+			AND memberno = #{memberno}
+			</if>
+		</where>
+	</sql>
+	<select id="count" parameterType="kr.co.project.board.notice.NoticeVO" resultType="int">
+		SELECT COUNT(*) FROM notice
+		<include refid="whereSql"/>
+	</select>
+	<select id="list" parameterType="kr.co.project.board.notice.NoticeVO" resultType="kr.co.project.board.notice.NoticeVO">
+		SELECT *, 
+			(SELECT name FROM member WHERE no=notice.memberno) membername
+		FROM notice
+		<include refid="whereSql"/>
+		ORDER BY regdate DESC, no DESC
+		LIMIT ${startIdx}, 10
+	</select>
+	<select id="view" parameterType="kr.co.project.board.notice.NoticeVO" resultType="kr.co.project.board.notice.NoticeVO">
+		SELECT * FROM notice where no= #{no}
+	</select>
+	<update id="updateViewcount" parameterType="int">
+		UPDATE notice SET viewcount = viewcount+1 WHERE no=#{no}
+	</update>
+</mapper>
+
+
+
+

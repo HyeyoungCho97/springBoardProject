@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.project.member.MemberMapper">
+	<insert id="insert" parameterType="kr.co.project.member.MemberVO">
+		INSERT INTO member (
+			`id`, `pwd`, `email`, `name`, `gender`, `birthday`, 
+			`tel`, `zipcode`, `addr1`, `addr2`, `regdate`
+		) VALUES (
+			#{id}, MD5(#{pwd}), #{email}, #{name}, #{gender}, #{birthday},
+			#{tel}, #{zipcode}, #{addr1}, #{addr2}, NOW()
+		)
+	</insert>
+	
+	<select id="login" parameterType="java.util.Map" resultType="kr.co.project.member.MemberVO">
+		SELECT * FROM member WHERE id=#{id} AND pwd=MD5(#{pwd})
+	</select>
+	
+	<select id="dupCheck" parameterType="java.util.Map" resultType="Integer">
+		SELECT COUNT(*) FROM member WHERE id=#{id}
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="kr.co.project.member.MemberVO" resultType="String">
+		SELECT id FROM member WHERE name=#{name} AND email=#{email}
+	</select>
+	
+	<!--  비밀번호찾기 사용자 조회 -->
+	<select id="findPwd" parameterType="kr.co.project.member.MemberVO" resultType="kr.co.project.member.MemberVO">
+		SELECT * FROM member WHERE name=#{name} AND id=#{id}
+	</select>
+	<!-- 비밀번호찾기 임시비밀번호 수정 -->
+	<update id="updateTempPwd"  parameterType="kr.co.project.member.MemberVO" >
+		UPDATE member SET pwd=MD5(#{pwd}) WHERE no=#{no}
+	</update>
+</mapper>
+
+
+
+
