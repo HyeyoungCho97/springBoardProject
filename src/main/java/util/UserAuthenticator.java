@@ -13,7 +13,7 @@ public class UserAuthenticator extends javax.mail.Authenticator {
      String password="";
      
      public UserAuthenticator() {
-    	 try (BufferedReader br = new BufferedReader(new FileReader(new File(/*본인 ID, PWD 정보가 담긴 파일 위치*/)))){
+    	 try (BufferedReader br = new BufferedReader(new FileReader(new File("D:\\naverLog.txt")))){
  			user = br.readLine();
  			password = br.readLine();
  		} catch (IOException e1) {

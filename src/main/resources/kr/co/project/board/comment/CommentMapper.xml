@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.project.board.comment.CommentMapper">
+	<insert id="insert" parameterType="kr.co.project.board.comment.CommentVO">
+		INSERT INTO	comment(
+			`comment`, `memberno`, `regdate`, `boardno`, `board_category`
+		) VALUES(
+			#{comment}, #{memberno}, NOW(), #{boardno}, #{board_category}
+		)
+	</insert>
+	<update id="update" parameterType="kr.co.project.board.comment.CommentVO">
+		UPDATE comment SET
+			comment = #{comment}
+		WHERE no=#{no} AND boardno=#{boardno}
+	</update>
+	<delete id="delete" parameterType="kr.co.project.board.comment.CommentVO">
+		DELETE FROM comment WHERE no=#{no}
+	</delete>
+	<select id="count" parameterType="kr.co.project.board.comment.CommentVO" resultType="int">
+		SELECT COUNT(*) FROM comment WHERE boardno=#{boardno}
+	</select>
+	<select id="list" parameterType="int">
+		SELECT * FROM comment WHERE boardno=#{boardno}
+		ORDER BY regdate DESC, no DESC
+	</select>
+</mapper>
+
+
+
+

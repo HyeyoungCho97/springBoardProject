@@ -53,7 +53,58 @@
                         </div>
                 
                     </div>
+                    <form method="post" name="frm" id="frm" action="" enctype="multipart/form-data" >
+	            	<table class="board_write">
+	                	<colgroup>
+	                    	<col width="*" />
+	                    	<col width="100px" />
+	                	</colgroup>
+	                    <tbody>
+	                    	<tr>
+	                        	<td>
+	                            	<textarea name="contents" id="contents" style="height:50px;" placeholder="댓글을 입력해 주세요"></textarea>
+	                            </td>
+	                            <td>
+	                                <div class="btnSet"  style="text-align:right;">
+	                                	<a class="btn" href="javascript:goSave();">저장 </a>
+	                                </div>
+	                            </td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	                <table class="list">
+                        <colgroup>
+                            <col width="100px" />
+                            <col width="*" />
+                            <col width="100px" />
+                            <col width="60px" />
+                            <col width="60px" />
+                        </colgroup>
+                        <tbody>
+                        	
+                            <tr>
+                                <td class="first" colspan="8">등록된 글이 없습니다.</td>
+                            </tr>
+
+                                    
+                            <tr>
+                                <td class="writer">
+                                    홍길동
+                                </td>
+                                <td class="txt_l">
+                                    <a href="board_view.html">게시글 제목</a>
+                                </td>
+                                <td class="date">2021-01-01</td>
+                                <td> [수정] </td>
+                                <td> [삭제] </td>
+                            </tr>
+                        </tbody>
+                    </table>
+	             </form>
                 </div>
+                <div>
+	            
+             	</div>
             </div>
         </div>
         <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
